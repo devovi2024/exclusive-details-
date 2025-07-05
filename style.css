@@ -1,0 +1,46 @@
+body {
+  font-family: sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+h1 {
+  color: #2c3e50;
+  text-align: center;
+}
+
+.function-block {
+  background: #eef;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-left: 5px solid #3498db;
+  border-radius: 6px;
+}
+
+.function-block h2 {
+  margin: 0 0 10px;
+}
+
+.code {
+  background: #333;
+  color: #0f0;
+  font-family: monospace;
+  padding: 10px;
+  border-radius: 5px;
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+.result {
+  margin-top: 10px;
+  font-weight: bold;
+}
