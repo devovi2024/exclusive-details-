@@ -1,18 +1,23 @@
 const output = document.getElementById("output");
 
-function showFunction(title, explanation, code, result) {
-  const block = document.createElement("div");
+// Helper function to create each function explanation block
+function showFunction(title, explanation, code, result, question, answer) {
+  const block = document.createElement("section");
   block.className = "function-block";
 
   block.innerHTML = `
-    <h2>${title}</h2>
-    <p>${explanation}</p>
-    <div class="code">${code}</div>
-    <div class="result">Result: ${result}</div>
+    <h2><span class="material-icons">code</span> ${title}</h2>
+    <p class="description">${explanation}</p>
+    <pre class="code">${code}</pre>
+    <div class="result">🖥️ Output: <code>${result}</code></div>
+    <div class="question">❓ প্রশ্ন: ${question}</div>
+    <div class="answer">💡 উত্তর: ${answer}</div>
   `;
 
   output.appendChild(block);
 }
+
+/* ----------- ফাংশনগুলো ------------- */
 
 function findCourseById(courses, id) {
   return courses.find(course => course.course_id === id);
@@ -23,12 +28,17 @@ const allCourses = [
   { course_id: "3", title: "JavaScript" },
 ];
 const courseFound = findCourseById(allCourses, "2");
-
 showFunction(
   "findCourseById",
-  "এই ফাংশনটি একটি কোর্স লিস্ট থেকে নির্দিষ্ট আইডি দিয়ে কোর্স খুঁজে বের করে।",
-  `findCourseById(allCourses, "2")`,
-  JSON.stringify(courseFound)
+  "এই ফাংশনটি কোর্সের লিস্ট থেকে আইডি দিয়ে নির্দিষ্ট কোর্স অবজেক্ট খুঁজে বের করে।",
+  `function findCourseById(courses, id) {
+  return courses.find(course => course.course_id === id);
+}
+
+findCourseById(allCourses, "2")`,
+  JSON.stringify(courseFound),
+  "কী কাজ করে?",
+  "এই ফাংশনটি courses অ্যারেতে find() ব্যবহার করে course_id মিলিয়ে খুঁজে দেয়।"
 );
 
 function countLectures(course) {
@@ -50,9 +60,17 @@ const course1 = {
 };
 showFunction(
   "countLectures",
-  "এই ফাংশনটি কোর্সে মোট কতটি লেকচার আছে তা গণনা করে।",
-  "countLectures(course1)",
-  countLectures(course1)
+  "এই ফাংশনটি একটি কোর্সের সব চ্যাপ্টারের লেকচারের সংখ্যা গোনে।",
+  `function countLectures(course) {
+  return course.chapters.reduce((total, chapter) => {
+    return total + chapter.chapterContent.length;
+  }, 0);
+}
+
+countLectures(course1)`,
+  countLectures(course1),
+  "কেন reduce ব্যবহার?",
+  "reduce দিয়ে সব chapters এর lecture সংখ্যা যোগ করা হয়।"
 );
 
 function totalCourseMinutes(course) {
@@ -82,9 +100,21 @@ const course2 = {
 };
 showFunction(
   "totalCourseMinutes",
-  "এই ফাংশনটি কোর্সের সব লেকচারের মোট সময় (মিনিটে) গণনা করে।",
-  "totalCourseMinutes(course2)",
-  totalCourseMinutes(course2)
+  "কোর্সের সব লেকচারের মোট সময় (মিনিটে) বের করে।",
+  `function totalCourseMinutes(course) {
+  let total = 0;
+  course.chapters.forEach(chapter => {
+    chapter.chapterContent.forEach(lecture => {
+      total += lecture.lectureDuration;
+    });
+  });
+  return total;
+}
+
+totalCourseMinutes(course2)`,
+  totalCourseMinutes(course2),
+  "কেন forEach?",
+  "forEach দিয়ে প্রতিটি lectureDuration যোগ করা হয় total এ।"
 );
 
 function getFinalPrice(price, discount) {
@@ -92,9 +122,15 @@ function getFinalPrice(price, discount) {
 }
 showFunction(
   "getFinalPrice",
-  "ডিসকাউন্টের পর মূল্য কত দাঁড়াবে তা গণনা করে।",
-  "getFinalPrice(100, 25)",
-  getFinalPrice(100, 25)
+  "মূল্য থেকে ডিসকাউন্ট কেটে ফাইনাল মূল্য বের করে (দশমিকসহ)।",
+  `function getFinalPrice(price, discount) {
+  return ((price * (100 - discount)) / 100).toFixed(2);
+}
+
+getFinalPrice(100, 25)`,
+  getFinalPrice(100, 25),
+  "কীভাবে কাজ করে?",
+  "প্রাইস থেকে ডিসকাউন্ট শতাংশ কমিয়ে বাকি ভাগ হিসাব করে এবং ২ দশমিকে রূপান্তর করে।"
 );
 
 function toggleChapter(currentIndex, clickedIndex) {
@@ -102,15 +138,16 @@ function toggleChapter(currentIndex, clickedIndex) {
 }
 showFunction(
   "toggleChapter",
-  "একই চ্যাপ্টার আবার ক্লিক করলে বন্ধ করে দেয়, অন্য চ্যাপ্টার ক্লিক করলে খোলে।",
-  "toggleChapter(2, 2)",
-  toggleChapter(2, 2)
-);
-showFunction(
-  "toggleChapter",
-  "নতুন চ্যাপ্টার খোলার সময় পুরানোটি বন্ধ করে দেয়।",
-  "toggleChapter(1, 2)",
-  toggleChapter(1, 2)
+  "একই ইনডেক্স ক্লিক করলে বন্ধ করে দেয়, অন্য ক্লিক করলে ঐ ইনডেক্স রিটার্ন করে।",
+  `function toggleChapter(currentIndex, clickedIndex) {
+  return currentIndex === clickedIndex ? null : clickedIndex;
+}
+
+toggleChapter(2, 2)
+toggleChapter(1, 2)`,
+  `toggleChapter(2,2) => ${toggleChapter(2, 2)}\ntoggleChapter(1,2) => ${toggleChapter(1, 2)}`,
+  "কেন এমন কাজ করে?",
+  "একই ইনডেক্স থাকলে null রিটার্ন করে (বন্ধ), না হলে নতুন ইনডেক্স দেয় (খোলা)।"
 );
 
 function formatDuration(minutes) {
@@ -120,15 +157,18 @@ function formatDuration(minutes) {
 }
 showFunction(
   "formatDuration",
-  "মিনিটকে ঘন্টা ও মিনিটে রূপান্তর করে।",
-  "formatDuration(125)",
-  formatDuration(125)
-);
-showFunction(
-  "formatDuration",
-  "৫০ মিনিটে কোনো ঘন্টা নেই।",
-  "formatDuration(50)",
-  formatDuration(50)
+  "মিনিট থেকে ঘন্টা ও মিনিটের ফরম্যাটে রূপান্তর করে।",
+  `function formatDuration(minutes) {
+  const h = Math.floor(minutes / 60);
+  const m = minutes % 60;
+  return \`\${h > 0 ? \`\${h}h \` : ""}\${m}m\`;
+}
+
+formatDuration(125)
+formatDuration(50)`,
+  `formatDuration(125) => ${formatDuration(125)}\nformatDuration(50) => ${formatDuration(50)}`,
+  "কেন এই ফরম্যাট?",
+  "যদি ঘন্টা ০ হয় তবে ঘন্টা দেখায় না, শুধু মিনিট দেখায়।"
 );
 
 function countFreePreviews(course) {
@@ -157,7 +197,19 @@ const course3 = {
 };
 showFunction(
   "countFreePreviews",
-  "কোর্সে কয়টি ফ্রি প্রিভিউ লেকচার আছে তা গণনা করে।",
-  "countFreePreviews(course3)",
-  countFreePreviews(course3)
+  "কোর্সের ফ্রি প্রিভিউ লেকচার সংখ্যা গোনে।",
+  `function countFreePreviews(course) {
+  let count = 0;
+  course.chapters.forEach(ch => {
+    ch.chapterContent.forEach(lec => {
+      if (lec.isFreePreview) count++;
+    });
+  });
+  return count;
+}
+
+countFreePreviews(course3)`,
+  countFreePreviews(course3),
+  "কেন দরকার?",
+  "কেননা, ফ্রি লেকচার সংখ্যা জানতে শিক্ষার্থীদের সুবিধা হয়।"
 );
