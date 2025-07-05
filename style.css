@@ -1,93 +1,122 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Roboto', sans-serif;
   background: #f9fbfc;
-  margin: 0; padding: 0;
+  margin: 0;
+  padding: 20px 15px;
   color: #222;
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .container {
   max-width: 900px;
-  margin: 40px auto;
-  background: #fff;
-  padding: 25px 40px;
-  border-radius: 12px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  margin: 0 auto;
+  background: white;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+  border: 1px solid #ddd;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
 header h1 {
-  font-size: 2.6rem;
+  font-size: 2.8rem;
   color: #1a237e;
-  text-align: center;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
+  font-weight: 700;
+  user-select: none;
 }
 
 header p {
-  text-align: center;
   font-style: italic;
   color: #555;
-  margin-bottom: 35px;
   font-weight: 500;
+  font-size: 1.1rem;
+}
+
+main {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 5px;
 }
 
 .function-block {
   border-left: 6px solid #3f51b5;
   background: #e8eaf6;
-  padding: 20px 25px;
-  margin-bottom: 28px;
-  border-radius: 8px;
+  padding: 25px 30px;
+  margin-bottom: 30px;
+  border-radius: 12px;
   transition: background 0.3s ease;
+  box-shadow: 0 1px 4px rgba(63,81,181,0.2);
 }
 
 .function-block:hover {
   background: #d1d9ff;
+  box-shadow: 0 4px 16px rgba(63,81,181,0.3);
 }
 
 .function-block h2 {
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #303f9f;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+  user-select: text;
 }
 
 .material-icons {
-  font-size: 2rem;
+  font-size: 2.4rem;
   color: #3f51b5;
+  user-select: none;
 }
 
 .description {
-  font-size: 1.15rem;
-  margin-bottom: 15px;
+  font-size: 1.2rem;
+  margin-bottom: 18px;
   font-weight: 600;
   color: #424242;
+  user-select: text;
 }
 
 .question {
   font-weight: 700;
-  margin-top: 12px;
+  margin-top: 18px;
   color: #283593;
+  user-select: text;
 }
 
 .answer {
-  margin-left: 18px;
+  margin-left: 22px;
   font-weight: 500;
   color: #3949ab;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
+  user-select: text;
 }
 
 .code {
   background: #2d2f3b;
   color: #a5d6ff;
   font-family: 'Roboto Mono', monospace;
-  padding: 15px;
-  font-size: 1.15rem;
-  border-radius: 7px;
+  padding: 20px 25px;
+  font-size: 1.25rem;
+  border-radius: 10px;
   overflow-x: auto;
-  margin-bottom: 15px;
+  margin-bottom: 20px;
   user-select: text;
   white-space: pre-wrap;
 }
@@ -95,19 +124,91 @@ header p {
 .result {
   background: #c5cae9;
   color: #1a237e;
-  padding: 10px 15px;
+  padding: 15px 20px;
   font-weight: 700;
-  font-size: 1.1rem;
-  border-radius: 5px;
+  font-size: 1.2rem;
+  border-radius: 8px;
   border: 2px solid #3f51b5;
   user-select: text;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  white-space: pre-wrap;
 }
 
 footer {
   text-align: center;
   color: #999;
-  margin-top: 40px;
-  font-size: 0.9rem;
+  margin-top: auto;
+  padding-top: 20px;
+  font-size: 1rem;
   font-style: italic;
+  user-select: none;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 25px 20px;
+  }
+
+  header h1 {
+    font-size: 2.2rem;
+  }
+
+  .function-block h2 {
+    font-size: 1.6rem;
+  }
+
+  .description, .question, .answer {
+    font-size: 1rem;
+  }
+
+  .code {
+    font-size: 1rem;
+    padding: 15px 18px;
+  }
+
+  .result {
+    font-size: 1rem;
+    padding: 12px 15px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding: 15px 10px;
+  }
+  
+  .container {
+    padding: 20px 15px;
+  }
+
+  header h1 {
+    font-size: 1.8rem;
+  }
+
+  header p {
+    font-size: 0.9rem;
+  }
+
+  .function-block {
+    padding: 18px 20px;
+  }
+
+  .function-block h2 {
+    font-size: 1.3rem;
+  }
+
+  .description, .question, .answer {
+    font-size: 0.9rem;
+  }
+
+  .code {
+    font-size: 0.85rem;
+    padding: 12px 15px;
+  }
+
+  .result {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
 }
