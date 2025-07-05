@@ -1,12 +1,11 @@
 const output = document.getElementById("output");
 
-// Helper function to create each function explanation block
 function showFunction(title, explanation, code, result, question, answer) {
   const block = document.createElement("section");
   block.className = "function-block";
 
   block.innerHTML = `
-    <h2><span class="material-icons">code</span> ${title}</h2>
+    <h2><span class="material-icons" aria-hidden="true">code</span> ${title}</h2>
     <p class="description">${explanation}</p>
     <pre class="code">${code}</pre>
     <div class="result">🖥️ Output: <code>${result}</code></div>
@@ -16,8 +15,6 @@ function showFunction(title, explanation, code, result, question, answer) {
 
   output.appendChild(block);
 }
-
-/* ----------- ফাংশনগুলো ------------- */
 
 function findCourseById(courses, id) {
   return courses.find(course => course.course_id === id);
